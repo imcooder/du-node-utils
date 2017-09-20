@@ -7,7 +7,7 @@
 /* jshint node:true */
 var _ = require('underscore');
 var request = require('request');
-let clone = require('clone');
+let Clone = require('clone');
 var logger = require('log4js').getLogger('node', __filename);
 var util = {
 
@@ -336,5 +336,5 @@ util.clone = function(obj) {
     return _.clone(obj);
 };
 util.deepClone = function(obj) {
-    return clone.clone(obj);
+    return Clone(obj);
 };
