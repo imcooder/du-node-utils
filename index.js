@@ -7,6 +7,7 @@
 /* jshint node:true */
 var _ = require('underscore');
 var request = require('request');
+let clone = require('clone');
 var logger = require('log4js').getLogger('node', __filename);
 var util = {
 
@@ -330,4 +331,10 @@ util.selectByIDC = function (configs, idc) {
             return true;
         }
     });
+};
+util.clone = function(obj) {
+    return _.clone(obj);
+};
+util.deepClone = function(obj) {
+    return clone.clone(obj);
 };
