@@ -8,6 +8,7 @@
 var _ = require('underscore');
 var request = require('request');
 let Clone = require('clone');
+var crypto = require('crypto');
 var util = {
 
 };
@@ -337,6 +338,11 @@ util.deepClone = function(obj) {
     return Clone(obj);
 };
 
+function md5(str){
+    var md5sum = crypto.createHash('md5');
+    md5sum.update(str);
+    return md5sum.digest('hex');
+}
 
 util.ip2int = function(ip) {
     let n = util.ip2long(ip);
