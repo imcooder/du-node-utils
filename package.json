@@ -7,8 +7,6 @@
   "repository": "git@github.com:imcooder/du-node-utils",
   "dependencies": {
     "clone": "^2.1.1",
-    "log4js": "^2.3.3",
-    "os": "^0.1.1",
     "request": "^2.81.0",
     "underscore": "^1.8.3",
     "uuid": "^3.1.0"

@@ -97,7 +97,7 @@ util.invokeCallback = function (cb) {
 
         var args = Array(len - 1);
         for (i = 1; i < len; i++)
-            args[i - 1] = arguments[i];
+        args[i - 1] = arguments[i];
         cb.apply(null, args);
         // cb.apply(null, Array.prototype.slice.call(arguments, 1));
     }
@@ -195,10 +195,11 @@ util.postJson = function (options, body) {
                     return;
                 }
                 console.error('[http]callback failed opt:[%j] body[%j] error:%s', options, data,
-                    err.stack);
-                reject(err);
-                return;
+                              err.stack);
+                              reject(err);
+                              return;
             }
+            // console.log('[http]callback success [%s] opt:%j response[%j]', options.url, options,
             //    data);
             var jsonObject = data;
             resolve(jsonObject);
