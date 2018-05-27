@@ -7,7 +7,8 @@
 /* jshint node:true */
 var _ = require('underscore');
 var request = require('request');
-var logger = require('log4js').getLogger('node', __filename);
+let Clone = require('clone');
+var crypto = require('crypto');
 var util = {
 
 };
@@ -149,7 +150,7 @@ util.parseData = function (data, schema) {
             return;
         }
         if (!_.has(schema, key)) {
-            logger.error('unknown data in db:%s', key);
+            console.error('unknown data in db:%s', key);
             return;
         }
         if (schema[key].type == 'string') {
@@ -160,14 +161,14 @@ util.parseData = function (data, schema) {
                     var tmp = value.toString();
                     expectData[key] = tmp;
                 } catch (error) {
-                    logger.error('bad string format:%s', error.stack);
+                    console.error('bad string format:%s', error.stack);
                 }
             }
         } else if (schema[key].type == 'int') {
             try {
                 expectData[key] = parseInt(value, 10);
             } catch (error) {
-                logger.error('parseint failed:%s', error.stack);
+                console.error('parseint failed:%s', error.stack);
             }
         } else if (schema[key].type == 'bool') {
             if (_.isBoolean(value)) {
@@ -177,30 +178,29 @@ util.parseData = function (data, schema) {
             } else if (value === 'false') {
                 expectData[key] = false;
             } else {
-                logger.error('bad boolean format key:%s value:%s', key, value);
+                console.error('bad boolean format key:%s value:%s', key, value);
             }
         }
     });
     return expectData;
 };
 util.postJson = function (options, body) {
-    var logger = require('log4js').getLogger('connect', __filename);
     var p = new Promise(function (resolve, reject) {
         options.json = body;
         // console.log(options);
         request.post(options, function (err, httpResponse, data) {
             if (err) {
                 if (err.code === 'ETIMEDOUT' || err.code === 'ESOCKETTIMEDOUT') {
-                    logger.error('[http] timeout opt:%j', options);
+                    console.error('[http] timeout opt:%j', options);
                     reject(new Error('timeout'));
                     return;
                 }
-                logger.error('[http]callback failed opt:[%j] body[%j] error:%s', options, data,
+                console.error('[http]callback failed opt:[%j] body[%j] error:%s', options, data,
                     err.stack);
                 reject(err);
                 return;
             }
-            // logger.info('[http]callback success [%s] opt:%j response[%j]', options.url, options,
+            // console.log('[http]callback success [%s] opt:%j response[%j]', options.url, options,
             //    data);
             var jsonObject = data;
             resolve(jsonObject);
@@ -330,6 +330,35 @@ util.selectByIDC = function (configs, idc) {
             return true;
         }
     });
+};
+
+util.clone = function (obj) {
+    return _.clone(obj);
+};
+util.deepClone = function (obj) {
+    return Clone(obj);
+};
+
+function md5(str) {
+    var md5sum = crypto.createHash('md5');
+    md5sum.update(str);
+    return md5sum.digest('hex');
+}
+
+util.ip2int = function (ip) {
+    let n = util.ip2long(ip);
+    /** convert to network order */
+    n = ((n & 0xFF) << 24) | (((n >> 8) & 0xFF) << 16) | (((n >> 16) & 0xFF) << 8) | ((n >> 24) & 0xFF);
+    return n < (1 << 31) ? n : n - (1 << 32);
+};
+
+util.ip2long = function (ip) {
+    var ipl = 0;
+    ip.split('.').forEach(function (octet) {
+        ipl <<= 8;
+        ipl += parseInt(octet, 10);
+    });
+    return (ipl >>> 0);
 };
 
 util.parseArgs = function (args) {
