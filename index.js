@@ -331,3 +331,35 @@ util.selectByIDC = function (configs, idc) {
         }
     });
 };
+
+util.parseArgs = function (args) {
+    let argsMap = {};
+    if (args.length < 1) {
+        return argsMap;
+    }
+    let mainPos = 1;
+    argsMap.main = args[mainPos];
+    for (let i = mainPos + 1; i < args.length; i++) {
+        let arg = args[i];
+        let sep = arg.indexOf('=');
+        let key = arg;
+        let value = '';
+        if (sep !== -1) {
+            key = arg.slice(0, sep);
+            while (key.length > 0) {
+                if (key[0] === '-') {
+                    key = key.slice(1);
+                } else {
+                    break;
+                }
+            }
+            value = arg.slice(sep + 1);
+        }
+        if (!isNaN(Number(value)) && (value.indexOf('.') < 0)) {
+            value = Number(value);
+        }
+        argsMap[key] = value;
+    }
+
+    return argsMap;
+};
