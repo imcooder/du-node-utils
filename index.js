@@ -392,3 +392,15 @@ util.parseArgs = function (args) {
 
     return argsMap;
 };
+
+util.formatErrorMsg = (message) => {
+    if (!message) {
+        return '';
+    }
+    let msg = message.toString();
+    let matchs = /service\=(\S+)/i.exec(msg);
+    if (matchs) {
+        return matchs[1] + ' error';
+    }
+    return msg;
+}
