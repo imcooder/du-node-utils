@@ -68,7 +68,7 @@ util.makeUUID = function (trim) {
     var uuidV4 = require('uuid/v4');
     var id = uuidV4();
     if (trim) {
-        id = id.replace('-', '');
+        id = id.replace(/[-]/g, '');
     }
     return id;
 };
