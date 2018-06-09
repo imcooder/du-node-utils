@@ -403,4 +403,8 @@ util.formatErrorMsg = (message) => {
         return matchs[1] + ' error';
     }
     return msg;
-}
+};
+
+util.simplifyString = (str) => {
+    return str.toString().replace(/[^0-9A-Za-z_./]/g, '_').toLowerCase();
+};
