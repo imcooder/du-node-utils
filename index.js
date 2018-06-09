@@ -404,7 +404,25 @@ util.formatErrorMsg = (message) => {
     }
     return msg;
 };
-
+util.trimStringLeft = (str, charset) => {
+    if (!str || !charset) {
+        return str;
+    }
+    return str.replace(new RegExp('^\\' + charset + '+', 'g'), '');
+};
+util.trimStringRight = (str, charset) => {
+    if (!str || !charset) {
+        return str;
+    }
+    return str.replace(new RegExp('\\' + charset+'+$', 'g'), '');
+};
+util.trimString = (str, charset) => {
+    if (!str || !charset) {
+        return str;
+    }
+    return str.replace(new RegExp('^\\' + charset + '+|\\' + charset + '+$', 'g'), '');
+};
 util.simplifyString = (str) => {
-    return str.toString().replace(/[^0-9A-Za-z_./]/g, '_').toLowerCase();
+    let ret = str.toString().replace(/[^0-9A-Za-z_./]/g, '_').toLowerCase();
+    return util.trimString(ret, ' _'); 
 };
