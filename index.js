@@ -404,25 +404,51 @@ util.formatErrorMsg = (message) => {
     }
     return msg;
 };
+
+
 util.trimStringLeft = (str, charset) => {
     if (!str || !charset) {
         return str;
     }
-    return str.replace(new RegExp('^\\' + charset + '+', 'g'), '');
+    let firstNotIn = -1;
+    for(let i = 0; i < str.length; i++) {
+        if (charset.indexOf(str.charAt(i)) === -1){
+            firstNotIn = i;
+            break;
+        }
+    }
+    if (firstNotIn < 0) {
+        return '';
+    }
+    return str.substr(firstNotIn);
 };
+
 util.trimStringRight = (str, charset) => {
     if (!str || !charset) {
         return str;
     }
-    return str.replace(new RegExp('\\' + charset+'+$', 'g'), '');
+    let lastFirstNotIn = -1;
+    for(let i = str.length - 1; i >= 0; i--) {
+        if (charset.indexOf(str.charAt(i)) === -1){
+            lastFirstNotIn = i;
+            break;
+        }
+    }
+    if (lastFirstNotIn < 0) {
+        return '';
+    }
+    return str.substr(0, lastFirstNotIn);
 };
+
 util.trimString = (str, charset) => {
     if (!str || !charset) {
         return str;
     }
-    return str.replace(new RegExp('^\\' + charset + '+|\\' + charset + '+$', 'g'), '');
+    return util.trimStringLeft(util.trimStringRight(str, charset), charset);
 };
+
 util.simplifyString = (str) => {
-    let ret = str.toString().replace(/[^0-9A-Za-z_./]/g, '_').toLowerCase();
-    return util.trimString(ret, ' _'); 
+    let ret = str.toString().replace(/[^0-9A-Za-z_.]/g, '_').toLowerCase();
+    return util.trimString(ret, '_').trim();
 };
+
