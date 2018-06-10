@@ -437,7 +437,7 @@ util.trimStringRight = (str, charset) => {
     if (lastFirstNotIn < 0) {
         return '';
     }
-    return str.substr(0, lastFirstNotIn);
+    return str.substr(0, lastFirstNotIn + 1);
 };
 
 util.trimString = (str, charset) => {
