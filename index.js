@@ -339,7 +339,7 @@ util.deepClone = function (obj) {
     return Clone(obj);
 };
 
-util.md5(str) {
+util.md5 = str => {
     var md5sum = crypto.createHash('md5');
     md5sum.update(str);
     return md5sum.digest('hex');
