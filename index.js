@@ -452,3 +452,14 @@ util.simplifyString = (str) => {
     return util.trimString(ret, '_').trim();
 };
 
+util.parseIp = (ipString) => {
+    const ipReg = /(\d+)\.(\d+)\.(\d+)\.(\d+)/g;
+    if (!ipString) {
+        return null;
+    }
+    matchs = ipString.match(ipReg);
+    if (!matchs) {
+        return null;        
+    }
+    return matchs[0];
+};
