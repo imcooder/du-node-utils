@@ -9,6 +9,10 @@ var _ = require('underscore');
 var request = require('request');
 let Clone = require('clone');
 var crypto = require('crypto');
+
+
+const ipReg = /(\d+)\.(\d+)\.(\d+)\.(\d+)/g;
+
 var util = {
 
 };
@@ -453,7 +457,6 @@ util.simplifyString = (str) => {
 };
 
 util.parseIp = (ipString) => {
-    const ipReg = /(\d+)\.(\d+)\.(\d+)\.(\d+)/g;
     if (!ipString) {
         return null;
     }
@@ -462,4 +465,20 @@ util.parseIp = (ipString) => {
         return null;        
     }
     return matchs[0];
+};
+util.getClientIpFromHttpHeader = (headers) => {
+    let matchs = null;
+    if (headers['x-forwarded-for']) {
+        matchs = headers['x-forwarded-for'].match(ipReg);
+        if (matchs) {
+            return matchs[0];
+        }
+    }
+    if (headers.clientip) {
+        matchs = headers.clientip.match(ipReg);
+        if (matchs) {
+            return matchs[0];
+        }
+    }
+    return '';
 };
