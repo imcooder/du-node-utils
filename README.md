@@ -212,6 +212,58 @@ util.md5('hello');
 // Returns: "5d41402abc4b2a76b9719d911017c592"
 ```
 
+### Timer Utilities (XTimeUse)
+
+Multi-stage time profiling with independent tag-based timers.
+
+| Method | Description |
+|--------|-------------|
+| `new XTimeUse()` | Create a timer, starts counting immediately |
+| `start(tag?)` | Start timing for a tag. No tag resets the default timer |
+| `stop(tag?)` | Stop and return elapsed ms. Cached if already stopped |
+| `restart(tag?)` | Restart timing, return previous segment ms |
+| `elapsed(tag?)` | Get current elapsed ms without stopping |
+| `get(tag?)` | Get start timestamp (ms) |
+
+```javascript
+const { XTimeUse } = require('du-node-utils');
+
+// 1. Simple usage
+const timer = new XTimeUse();
+// ... some work ...
+console.log(`took ${timer.stop()}ms`);
+
+// 2. Multi-stage profiling
+const t = new XTimeUse();
+
+t.start('connect');
+// ... connect to db ...
+const connectTime = t.stop('connect');
+
+t.start('query');
+// ... run query ...
+const queryTime = t.stop('query');
+
+console.log(`total:${t.stop()}ms connect:${connectTime}ms query:${queryTime}ms`);
+
+// 3. Stop without explicit start - measures from creation time
+const totalProcess = t.stop('full_process');
+
+// 4. Peek at elapsed without stopping
+t.start('long_task');
+// ... partial work ...
+console.log(`so far: ${t.elapsed('long_task')}ms`);
+// ... more work ...
+console.log(`done: ${t.stop('long_task')}ms`);
+
+// 5. Restart to measure segments
+t.start('phase');
+// ... phase 1 ...
+const phase1 = t.restart('phase'); // returns phase1 time, restarts
+// ... phase 2 ...
+const phase2 = t.stop('phase');
+```
+
 ### Callback/Response Utilities
 
 | Method | Description |

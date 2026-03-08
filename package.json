@@ -1,6 +1,6 @@
 {
     "name": "du-node-utils",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "dueros node utils",
     "author": "imcooder <imcooder@gmail.com>",
     "license": "MIT",
@@ -12,7 +12,13 @@
         "underscore": "^1.8.3",
         "uuid": "^9.0.0"
     },
+    "scripts": {
+        "build": "tsc",
+        "prepublishOnly": "npm run build"
+    },
     "devDependencies": {
-        "eslint": "^3.6.1"
+        "@types/node": "^25.3.5",
+        "eslint": "^3.6.1",
+        "typescript": "^5.9.3"
     }
 }

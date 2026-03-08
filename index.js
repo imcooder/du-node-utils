@@ -15,6 +15,7 @@ const date = require('./lib/date');
 const collection = require('./lib/collection');
 const cryptoUtil = require('./lib/crypto');
 const callback = require('./lib/callback');
+const { XTimeUse } = require('./lib/TimeUse');
 
 // Aggregate and export all methods for backward compatibility
 const util = {
@@ -69,7 +70,10 @@ const util = {
     // Callback/Response utilities
     invokeCallback: callback.invokeCallback,
     json: callback.json,
-    stringArrayBuffer: callback.stringArrayBuffer
+    stringArrayBuffer: callback.stringArrayBuffer,
+
+    // Timer utilities
+    XTimeUse: XTimeUse
 };
 
 // Export sub-modules for selective imports
