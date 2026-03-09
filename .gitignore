@@ -1,6 +1,2 @@
 *.un~
 node_modules
-lib/TimeUse.js
-lib/TimeUse.d.ts
-lib/TimeUse.js.map
-lib/TimeUse.d.ts.map
