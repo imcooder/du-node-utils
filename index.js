@@ -16,6 +16,7 @@ const collection = require('./lib/collection');
 const cryptoUtil = require('./lib/crypto');
 const callback = require('./lib/callback');
 const { XTimeUse } = require('./lib/TimeUse');
+const { XWordsCount } = require('./lib/WordsSum');
 
 // Aggregate and export all methods for backward compatibility
 const util = {
@@ -73,7 +74,10 @@ const util = {
     stringArrayBuffer: callback.stringArrayBuffer,
 
     // Timer utilities
-    XTimeUse: XTimeUse
+    XTimeUse: XTimeUse,
+
+    // Word counting utilities
+    XWordsCount: XWordsCount
 };
 
 // Export sub-modules for selective imports

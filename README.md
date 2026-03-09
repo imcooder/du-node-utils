@@ -264,6 +264,90 @@ const phase1 = t.restart('phase'); // returns phase1 time, restarts
 const phase2 = t.stop('phase');
 ```
 
+### Word Counting (XWordsCount)
+
+Incremental text word/character counter with Unicode-aware language support.
+Counts are updated on each `append()` call for maximum efficiency.
+
+**Supported languages:** Chinese, Japanese (Hiragana/Katakana), Korean (Hangul), English, German, French, Arabic, Hebrew, Cyrillic, Thai, Greek, Devanagari, and more.
+
+**Counting rules:**
+- CJK characters: each character = 1 word
+- Non-CJK text: each space-separated token containing at least one alphanumeric character = 1 word
+
+| Method / Property | Description |
+|-------------------|-------------|
+| `new XWordsCount(options?)` | Create counter. Options: `ignorePunctuation`, `ignoreWhitespace` |
+| `append(text)` | Append text and update counts |
+| `wordCount` | Current word count (getter) |
+| `charCount` | Current character count (getter) |
+| `reset()` | Reset all counts |
+
+```javascript
+const { XWordsCount } = require('du-node-utils');
+
+const counter = new XWordsCount({ ignorePunctuation: true });
+
+// English
+counter.append('Hello world');
+console.log(counter.wordCount); // 2
+
+// Chinese
+counter.append('你好世界');
+console.log(counter.wordCount); // 6 (2 English + 4 CJK)
+
+// Japanese (Hiragana/Katakana each char = 1 word)
+counter.append('こんにちは');
+console.log(counter.wordCount); // 11 (6 + 5 Hiragana)
+
+// Korean (each Hangul syllable = 1 word)
+counter.append('안녕하세요');
+console.log(counter.wordCount); // 16 (11 + 5 Hangul)
+
+// German (umlauts: ä, ö, ü, ß treated as alphanumeric)
+counter.append('Straße überall');
+console.log(counter.wordCount); // 18 (16 + 2 German words)
+
+// French (accented chars: é, è, ç, ê treated as alphanumeric)
+counter.append('café résumé');
+console.log(counter.wordCount); // 20 (18 + 2 French words)
+
+// Arabic
+counter.append('مرحبا بالعالم');
+console.log(counter.wordCount); // 22 (20 + 2 Arabic words)
+
+// Mixed in one append
+counter.reset();
+counter.append('Hello 你好 こんにちは Straße مرحبا');
+console.log(counter.wordCount); // 10 (1 Hello + 2 你好 + 5 こんにちは + 1 Straße + 1 مرحبا)
+```
+
+#### Punctuation handling
+
+```javascript
+// ignorePunctuation: true (punctuation skipped)
+const withIgnore = new XWordsCount({ ignorePunctuation: true });
+withIgnore.append('Hello, world!');
+console.log(withIgnore.wordCount); // 2 ("Hello" + "world", punctuation ignored)
+console.log(withIgnore.charCount); // 10 (only letters, comma and ! excluded)
+
+withIgnore.reset();
+withIgnore.append('你好。世界');
+console.log(withIgnore.wordCount); // 4 (你好世界, 。is CJK punctuation, skipped)
+console.log(withIgnore.charCount); // 4
+
+// ignorePunctuation: false (default, punctuation counted)
+const noIgnore = new XWordsCount();
+noIgnore.append('Hello, world!');
+console.log(noIgnore.wordCount); // 2 ("Hello," and "world!" both contain alphanumeric)
+console.log(noIgnore.charCount); // 12 (all non-whitespace chars including , and !)
+
+noIgnore.reset();
+noIgnore.append('你好。世界');
+console.log(noIgnore.wordCount); // 5 (你好。世界, 。in CJK range counts as 1 word)
+console.log(noIgnore.charCount); // 5
+```
+
 ### Callback/Response Utilities
 
 | Method | Description |
