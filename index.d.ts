@@ -5,6 +5,7 @@
 // Re-export TypeScript classes
 export { XTimeUse } from './lib/TimeUse';
 export { XWordsCount, XWordsCountOptions } from './lib/WordsSum';
+export { maskSecret, maskFields } from './lib/MaskSecret';
 
 // String utilities
 export function toString(obj: any): string;

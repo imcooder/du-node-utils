@@ -17,6 +17,7 @@ const cryptoUtil = require('./lib/crypto');
 const callback = require('./lib/callback');
 const { XTimeUse } = require('./lib/TimeUse');
 const { XWordsCount } = require('./lib/WordsSum');
+const { maskSecret, maskFields } = require('./lib/MaskSecret');
 
 // Aggregate and export all methods for backward compatibility
 const util = {
@@ -77,7 +78,11 @@ const util = {
     XTimeUse: XTimeUse,
 
     // Word counting utilities
-    XWordsCount: XWordsCount
+    XWordsCount: XWordsCount,
+
+    // Secret masking utilities
+    maskSecret: maskSecret,
+    maskFields: maskFields
 };
 
 // Export sub-modules for selective imports
