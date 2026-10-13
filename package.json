@@ -1,26 +1,99 @@
 {
     "name": "du-node-utils",
-    "version": "1.4.0",
-    "description": "dueros node utils",
-    "main": "index.js",
-    "types": "index.d.ts",
-    "author": "imcooder <imcooder@gmail.com>",
-    "license": "MIT",
-    "repository": "git@github.com:imcooder/du-node-utils",
-    "dependencies": {
-        "clone": "^2.1.1",
-        "crypto": "^1.0.1",
-        "request": "^2.81.0",
-        "underscore": "^1.8.3",
-        "uuid": "^9.0.0"
+    "version": "2.0.0",
+    "description": "Dependency-free Node.js utilities: session ids, strings, dates, collections, IP helpers, multi-stage timers and word counters.",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.cts",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            }
+        },
+        "./package.json": "./package.json",
+        "./lib/*": {
+            "import": {
+                "types": "./dist/*.d.ts",
+                "default": "./dist/*.js"
+            },
+            "require": {
+                "types": "./dist/*.d.cts",
+                "default": "./dist/*.cjs"
+            }
+        },
+        "./*": {
+            "import": {
+                "types": "./dist/*.d.ts",
+                "default": "./dist/*.js"
+            },
+            "require": {
+                "types": "./dist/*.d.cts",
+                "default": "./dist/*.cjs"
+            }
+        }
+    },
+    "files": [
+        "dist",
+        "CHANGELOG.md",
+        "LICENSE.md",
+        "README.md"
+    ],
+    "sideEffects": false,
+    "engines": {
+        "node": ">=18"
     },
     "scripts": {
-        "build": "tsc",
-        "prepublishOnly": "npm run build"
+        "build": "tsup",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint . && prettier --check .",
+        "format": "prettier --write .",
+        "test": "tsup && vitest run",
+        "test:watch": "vitest",
+        "prepublishOnly": "npm run lint && npm run typecheck && npm test"
     },
     "devDependencies": {
-        "@types/node": "^25.3.5",
-        "eslint": "^3.6.1",
-        "typescript": "^5.9.3"
+        "@eslint/js": "^9.39.0",
+        "@types/node": "^24.0.0",
+        "eslint": "^9.39.0",
+        "eslint-config-prettier": "^10.1.0",
+        "prettier": "^3.6.0",
+        "tsup": "^8.5.0",
+        "typescript": "^5.9.0",
+        "typescript-eslint": "^8.46.0",
+        "vitest": "^3.2.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/imcooder/du-node-utils.git"
+    },
+    "homepage": "https://github.com/imcooder/du-node-utils#readme",
+    "bugs": {
+        "url": "https://github.com/imcooder/du-node-utils/issues"
+    },
+    "keywords": [
+        "utils",
+        "node",
+        "session-id",
+        "timer",
+        "word-count",
+        "ip",
+        "esm",
+        "cjs",
+        "typescript"
+    ],
+    "author": "imcooder <imcooder@gmail.com>",
+    "license": "MIT",
+    "prettier": {
+        "tabWidth": 4,
+        "singleQuote": true,
+        "printWidth": 110,
+        "trailingComma": "all"
     }
 }

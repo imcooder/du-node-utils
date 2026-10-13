@@ -150,7 +150,10 @@ export class XWordsCount {
             if (token.length === 0) continue;
             if (this._options.ignorePunctuation) {
                 // Strip ASCII punctuation, check if anything remains
-                const stripped = token.replace(/[^\w\u00C0-\u024F\u0370-\u03FF\u0400-\u04FF\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\u0900-\u097F\u0E00-\u0E7F\uFB50-\uFDFF\uFE70-\uFEFF]/g, '');
+                const stripped = token.replace(
+                    /[^\w\u00C0-\u024F\u0370-\u03FF\u0400-\u04FF\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\u0900-\u097F\u0E00-\u0E7F\uFB50-\uFDFF\uFE70-\uFEFF]/g,
+                    '',
+                );
                 if (stripped.length > 0) {
                     wordCount++;
                 }
@@ -186,10 +189,10 @@ export class XWordsCount {
         const code = char.codePointAt(0)!;
         // ASCII punctuation
         if (
-            (code >= 0x21 && code <= 0x2F) ||
-            (code >= 0x3A && code <= 0x40) ||
-            (code >= 0x5B && code <= 0x60) ||
-            (code >= 0x7B && code <= 0x7E)
+            (code >= 0x21 && code <= 0x2f) ||
+            (code >= 0x3a && code <= 0x40) ||
+            (code >= 0x5b && code <= 0x60) ||
+            (code >= 0x7b && code <= 0x7e)
         ) {
             return true;
         }
@@ -199,12 +202,12 @@ export class XWordsCount {
     private _isCjkPunctuation(char: string): boolean {
         const code = char.codePointAt(0)!;
         return (
-            (code >= 0x3000 && code <= 0x303F) ||  // CJK Symbols and Punctuation
-            (code >= 0xFF01 && code <= 0xFF0F) ||  // Fullwidth forms
-            (code >= 0xFF1A && code <= 0xFF20) ||
-            (code >= 0xFF3B && code <= 0xFF40) ||
-            (code >= 0xFF5B && code <= 0xFF65) ||
-            (code >= 0xFE30 && code <= 0xFE4F)     // CJK Compatibility Forms
+            (code >= 0x3000 && code <= 0x303f) || // CJK Symbols and Punctuation
+            (code >= 0xff01 && code <= 0xff0f) || // Fullwidth forms
+            (code >= 0xff1a && code <= 0xff20) ||
+            (code >= 0xff3b && code <= 0xff40) ||
+            (code >= 0xff5b && code <= 0xff65) ||
+            (code >= 0xfe30 && code <= 0xfe4f) // CJK Compatibility Forms
         );
     }
 
@@ -215,17 +218,17 @@ export class XWordsCount {
         const code = char.codePointAt(0);
         if (code === undefined) return false;
         return (
-            (code >= 0x4E00 && code <= 0x9FFF) ||   // CJK Unified Ideographs
-            (code >= 0x3400 && code <= 0x4DBF) ||   // CJK Unified Ideographs Extension A
-            (code >= 0x20000 && code <= 0x2A6DF) || // CJK Unified Ideographs Extension B
-            (code >= 0x2A700 && code <= 0x2B73F) || // CJK Unified Ideographs Extension C
-            (code >= 0x2B740 && code <= 0x2B81F) || // CJK Unified Ideographs Extension D
-            (code >= 0xF900 && code <= 0xFAFF) ||   // CJK Compatibility Ideographs
-            (code >= 0x2F800 && code <= 0x2FA1F) || // CJK Compatibility Ideographs Supplement
-            (code >= 0x3000 && code <= 0x303F) ||   // CJK Symbols and Punctuation
-            (code >= 0x3040 && code <= 0x309F) ||   // Hiragana
-            (code >= 0x30A0 && code <= 0x30FF) ||   // Katakana
-            (code >= 0xAC00 && code <= 0xD7AF)      // Hangul Syllables
+            (code >= 0x4e00 && code <= 0x9fff) || // CJK Unified Ideographs
+            (code >= 0x3400 && code <= 0x4dbf) || // CJK Unified Ideographs Extension A
+            (code >= 0x20000 && code <= 0x2a6df) || // CJK Unified Ideographs Extension B
+            (code >= 0x2a700 && code <= 0x2b73f) || // CJK Unified Ideographs Extension C
+            (code >= 0x2b740 && code <= 0x2b81f) || // CJK Unified Ideographs Extension D
+            (code >= 0xf900 && code <= 0xfaff) || // CJK Compatibility Ideographs
+            (code >= 0x2f800 && code <= 0x2fa1f) || // CJK Compatibility Ideographs Supplement
+            (code >= 0x3000 && code <= 0x303f) || // CJK Symbols and Punctuation
+            (code >= 0x3040 && code <= 0x309f) || // Hiragana
+            (code >= 0x30a0 && code <= 0x30ff) || // Katakana
+            (code >= 0xac00 && code <= 0xd7af) // Hangul Syllables
         );
     }
 
@@ -239,31 +242,31 @@ export class XWordsCount {
         // 0-9
         if (code >= 0x30 && code <= 0x39) return true;
         // A-Z
-        if (code >= 0x41 && code <= 0x5A) return true;
+        if (code >= 0x41 && code <= 0x5a) return true;
         // a-z
-        if (code >= 0x61 && code <= 0x7A) return true;
+        if (code >= 0x61 && code <= 0x7a) return true;
         // Latin Extended / Accented (À-ö, ø-ÿ, German/French chars etc.)
-        if (code >= 0xC0 && code <= 0x024F) return true;
+        if (code >= 0xc0 && code <= 0x024f) return true;
         // Cyrillic (Russian, Ukrainian, etc.)
-        if (code >= 0x0400 && code <= 0x04FF) return true;
+        if (code >= 0x0400 && code <= 0x04ff) return true;
         // Arabic
-        if (code >= 0x0600 && code <= 0x06FF) return true;
+        if (code >= 0x0600 && code <= 0x06ff) return true;
         // Arabic Supplement
-        if (code >= 0x0750 && code <= 0x077F) return true;
+        if (code >= 0x0750 && code <= 0x077f) return true;
         // Arabic Extended-A
-        if (code >= 0x08A0 && code <= 0x08FF) return true;
+        if (code >= 0x08a0 && code <= 0x08ff) return true;
         // Arabic Presentation Forms-A
-        if (code >= 0xFB50 && code <= 0xFDFF) return true;
+        if (code >= 0xfb50 && code <= 0xfdff) return true;
         // Arabic Presentation Forms-B
-        if (code >= 0xFE70 && code <= 0xFEFF) return true;
+        if (code >= 0xfe70 && code <= 0xfeff) return true;
         // Hebrew
-        if (code >= 0x0590 && code <= 0x05FF) return true;
+        if (code >= 0x0590 && code <= 0x05ff) return true;
         // Devanagari (Hindi, etc.)
-        if (code >= 0x0900 && code <= 0x097F) return true;
+        if (code >= 0x0900 && code <= 0x097f) return true;
         // Thai
-        if (code >= 0x0E00 && code <= 0x0E7F) return true;
+        if (code >= 0x0e00 && code <= 0x0e7f) return true;
         // Greek
-        if (code >= 0x0370 && code <= 0x03FF) return true;
+        if (code >= 0x0370 && code <= 0x03ff) return true;
         return false;
     }
 }
