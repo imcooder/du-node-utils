@@ -1,6 +1,6 @@
 {
     "name": "du-node-utils",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Dependency-free Node.js utilities: session ids, strings, dates, collections, IP helpers, multi-stage timers and word counters.",
     "type": "module",
     "main": "./dist/index.cjs",
