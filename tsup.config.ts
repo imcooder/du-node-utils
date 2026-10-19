@@ -14,6 +14,7 @@ export default defineConfig({
         TimeUse: 'src/TimeUse.ts',
         WordsSum: 'src/WordsSum.ts',
         MaskSecret: 'src/MaskSecret.ts',
+        RunCommand: 'src/RunCommand.ts',
     },
     format: ['esm', 'cjs'],
     dts: true,

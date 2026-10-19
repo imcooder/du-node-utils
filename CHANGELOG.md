@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- `runCommand` / `commandSucceeded`: non-blocking process runner with timeout, abort signal, capped stdout/stderr capture and `prependPath`.
+
 ## 2.0.0
 
 ### Breaking

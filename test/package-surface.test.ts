@@ -50,6 +50,8 @@ const PUBLIC_API = [
     'XWordsCount',
     'maskSecret',
     'maskFields',
+    'runCommand',
+    'commandSucceeded',
 ];
 
 const NAMESPACES = ['string', 'network', 'id', 'data', 'date', 'collection', 'crypto', 'callback'];
