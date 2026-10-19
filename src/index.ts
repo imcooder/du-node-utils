@@ -9,6 +9,7 @@ export * from './callback.js';
 export { XTimeUse } from './TimeUse.js';
 export { XWordsCount, type XWordsCountOptions } from './WordsSum.js';
 export { maskSecret, maskFields } from './MaskSecret.js';
+export { runCommand, commandSucceeded, type RunCommandOptions, type RunCommandResult } from './RunCommand.js';
 
 import * as string from './string.js';
 import * as network from './network.js';
@@ -21,6 +22,7 @@ import * as callback from './callback.js';
 import { XTimeUse } from './TimeUse.js';
 import { XWordsCount } from './WordsSum.js';
 import { maskSecret, maskFields } from './MaskSecret.js';
+import { runCommand, commandSucceeded } from './RunCommand.js';
 
 export { string, network, id, data, date, collection, crypto, callback };
 
@@ -37,6 +39,8 @@ const duNodeUtils = {
     XWordsCount,
     maskSecret,
     maskFields,
+    runCommand,
+    commandSucceeded,
     string,
     network,
     id,
